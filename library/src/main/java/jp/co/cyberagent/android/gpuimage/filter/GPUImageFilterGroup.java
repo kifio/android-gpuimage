@@ -44,7 +44,6 @@ public class GPUImageFilterGroup extends GPUImageFilter {
 
     private final FloatBuffer glCubeBuffer;
     private final FloatBuffer glTextureBuffer;
-    private final FloatBuffer glTextureFlipBuffer;
 
     /**
      * Instantiates a new GPUImageFilterGroup with no filters.
@@ -75,12 +74,6 @@ public class GPUImageFilterGroup extends GPUImageFilter {
                 .order(ByteOrder.nativeOrder())
                 .asFloatBuffer();
         glTextureBuffer.put(TEXTURE_NO_ROTATION).position(0);
-
-        float[] flipTexture = TextureRotationUtil.getRotation(Rotation.NORMAL, false, true);
-        glTextureFlipBuffer = ByteBuffer.allocateDirect(flipTexture.length * 4)
-                .order(ByteOrder.nativeOrder())
-                .asFloatBuffer();
-        glTextureFlipBuffer.put(flipTexture).position(0);
     }
 
     public void addFilter(GPUImageFilter aFilter) {
@@ -88,6 +81,16 @@ public class GPUImageFilterGroup extends GPUImageFilter {
             return;
         }
         filters.add(aFilter);
+        updateMergedFilters();
+    }
+
+
+    public void setFilters(List<GPUImageFilter> filters) {
+
+        this.filters.clear();
+        if (filters != null) {
+            this.filters.addAll(filters);
+        }
         updateMergedFilters();
     }
 
@@ -201,8 +204,6 @@ public class GPUImageFilterGroup extends GPUImageFilter {
 
                 if (i == 0) {
                     filter.onDraw(previousTexture, cubeBuffer, textureBuffer);
-                } else if (i == size - 1) {
-                    filter.onDraw(previousTexture, glCubeBuffer, (size % 2 == 0) ? glTextureFlipBuffer : glTextureBuffer);
                 } else {
                     filter.onDraw(previousTexture, glCubeBuffer, glTextureBuffer);
                 }
