@@ -4,6 +4,9 @@
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/jp.co.cyberagent.android/gpuimage/badge.svg)](https://search.maven.org/artifact/jp.co.cyberagent.android/gpuimage)
 [![Build Status](https://app.bitrise.io/app/d8d8090a71066e7c/status.svg?token=sJNbvX8CkecWcUA5Z898lQ&branch=master)](https://app.bitrise.io/app/d8d8090a71066e7c)
 
+[Fix for flipping grouped textures](https://github.com/asydorov/android-gpuimage/commit/2975a2c958322edcffe143033e62c029319438bb)</br>
+[iOS shaders for Gaussian blur from](https://github.com/Akylas/android-gpuimage/commit/37ea2f277df4d3bd1d62aa434ca3fe00f0500a7d)
+
 Idea from: [iOS GPUImage framework](https://github.com/BradLarson/GPUImage2)
 
 Goal is to have something as similar to GPUImage as possible. Vertex and fragment shaders are exactly the same. That way it makes it easier to port filters from GPUImage iOS to Android.
